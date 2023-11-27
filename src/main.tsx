@@ -5,7 +5,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom"
 
 import Login from "./login/Login.tsx"
 import CreateUser from "./login/CreateUser.tsx"
-import Dashboard from "./expenses/Dashboard.tsx"
+import Dashboard from "./expenses/dashboard/Dashboard.tsx"
 
 const router = createBrowserRouter([
   {
