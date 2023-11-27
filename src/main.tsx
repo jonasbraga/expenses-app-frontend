@@ -5,7 +5,10 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom"
 
 import Login from "./login/Login.tsx"
 import CreateUser from "./login/CreateUser.tsx"
+import Panel from "./expenses/Panel.tsx"
 import Dashboard from "./expenses/dashboard/Dashboard.tsx"
+import MyMoney from "./expenses/myMoney/index.tsx"
+import MyAccount from "./expenses/myAccount/index.tsx"
 
 const router = createBrowserRouter([
   {
@@ -24,7 +27,21 @@ const router = createBrowserRouter([
   },
   {
     path: "/expenses", //pagina de gastos
-    element: <Dashboard />,
+    element: <Panel />,
+    children: [
+      {
+        path: "/expenses/dashboard",
+        element: <Dashboard />,
+      },
+      {
+        path: "/expenses/mymoney",
+        element: <MyMoney />,
+      },
+      {
+        path: "/expenses/myaccount",
+        element: <MyAccount />,
+      },
+    ],
   },
 ])
 
