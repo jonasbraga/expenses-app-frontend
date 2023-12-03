@@ -19,6 +19,7 @@ type FormValues = {
   firstName: string;
   lastName: string;
   email: string;
+  cpf: string;
   password: string;
   passwordConfirm: string;
 };
@@ -26,12 +27,16 @@ type FormValues = {
 export default function SignUp() {
   const navigate = useNavigate()
   const [errorMsg, setError] = React.useState("")
+  const [successMsg, setSuccess] = React.useState("")
 
+  const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/
+  
   const validationSchema = yup.object({
       firstName: yup.string().required('Nome obrigatório'),
       lastName: yup.string().required('Sobrenome obrigatório'),
       email: yup.string().email('Email inválido').required('Email obrigatório'),
-      password: yup.string().min(8,'Senha com no mínimo 8 caracteres').required(),
+      cpf: yup.string().min(11,'CPF inválido').max(11,'CPF inválidocMax').required('CPF obrigatório'),
+      password: yup.string().min(8,'Senha com no mínimo 8 caracteres').matches(passwordRegex, "A senha deve possuir ao menos 1 letra maiúscula, 1 minuscula, 1 numero e 1 caracter especial").required(),
       passwordConfirm: yup.string().required('Confirme a senha').oneOf([yup.ref('password')], 'As senhas devem coincidir!'),
   })
 
@@ -41,23 +46,31 @@ export default function SignUp() {
 
   const submit = async (data: FormValues) => {
     try {
-    const response = await axios.post("http://localhost:3001/login", {
+    const response = await axios.post(import.meta.env.VITE_SERVER_URL + "/usuarios", {
         email: data.email,
-        password: data.password,
+        senha: data.password,
+        nome: data.firstName + " " + data.lastName,
+        cpf: data.cpf,
+        login: data.email
       })
 
-      sessionStorage.setItem("token", response.data.token)
-
-      return navigate("/expenses")
+      if (response.status !== 201) { 
+        throw response
+      } 
+      setError("")
+      setSuccess("Cadastro realizado com sucesso! Faça login para continuar")
+      setTimeout(() => {
+        return navigate("/")
+      }, 2500)
     } catch (error: unknown) {
       if (isAxiosError(error)) {
-        console.log(error.code)
-        console.log(error.response?.data)
+        const errors = error.response?.data?.erros
+        if (Array.isArray(errors)) {
+          setError(errors.join(", "))
+          return
+        }
       }
-      setError("Algum dado inválido")
-      setTimeout(() => {
-        return navigate("/expenses")
-      }, 4000)
+      setError("Não foi possivel cadastrar no momento")
     }
   }
 
@@ -122,6 +135,20 @@ export default function SignUp() {
             </Grid>
             <Grid item xs={12}>
               <TextField
+               {...(errors.cpf && {
+                error: true,
+                helperText: errors.cpf.message,
+              })}
+                id="cpf"
+                type="number"
+                label="CPF"
+                autoComplete="cpf"
+                fullWidth
+                {...register("cpf")}
+              />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <TextField
               {...(errors.password && {
                 error: true,
                 helperText: errors.password.message,
@@ -134,7 +161,7 @@ export default function SignUp() {
                 {...register("password")}
               />
             </Grid>
-            <Grid item xs={12}>
+            <Grid item xs={12} sm={6}>
               <TextField
                 {...(errors.passwordConfirm && {
                   error: true,
@@ -152,6 +179,11 @@ export default function SignUp() {
           {errorMsg && (
             <Alert severity="error" sx={{ mt: 2 }}>
               {errorMsg}
+            </Alert>
+          )}
+          {successMsg && (
+            <Alert severity="success" sx={{ mt: 2 }}>
+              {successMsg}
             </Alert>
           )}
           <Button

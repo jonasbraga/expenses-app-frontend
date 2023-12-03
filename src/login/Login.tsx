@@ -38,12 +38,16 @@ export default function Login() {
 
   const submit = async (data: FormValues) => {
     try {
-      const response = await axios.post("http://localhost:3001/login", {
-        email: data.email,
-        password: data.password,
+      const response = await axios.post(import.meta.env.VITE_SERVER_URL + "/usuarios/login", {
+        Login: data.email,
+        senha: data.password,
       })
 
-      sessionStorage.setItem("token", response.data.token)
+      if (response.status !== 200) {
+        throw response
+      }
+      
+      sessionStorage.setItem("token", response.data.dados)
 
       return navigate("/expenses")
     } catch (error: unknown) {
@@ -52,9 +56,6 @@ export default function Login() {
         console.log(error.response?.data)
       }
       setError("Email ou senha incorretos")
-      setTimeout(() => {
-        return navigate("/expenses")
-      }, 4000)
     }
   }
 
