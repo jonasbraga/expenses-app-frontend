@@ -7,7 +7,10 @@ import PeopleIcon from '@mui/icons-material/People'
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney'
 import { NavLink, NavLinkProps } from 'react-router-dom'
 
-export const StyledNavLink: React.FC<NavLinkProps> = ({ children, ...props }) => {
+export const StyledNavLink: React.FC<NavLinkProps> = ({
+  children,
+  ...props
+}) => {
   return (
     <NavLink style={{ textDecoration: 'none', color: 'unset' }} {...props}>
       {children}
@@ -15,8 +18,7 @@ export const StyledNavLink: React.FC<NavLinkProps> = ({ children, ...props }) =>
   )
 }
 
-export default function ListItems(){
-
+export default function ListItems() {
   const [active, setActive] = React.useState('dashboard')
   const toggleActiveTab = (tab: string) => () => {
     setActive(tab)
@@ -24,7 +26,7 @@ export default function ListItems(){
   return (
     <React.Fragment>
       <StyledNavLink to="dashboard" onClick={toggleActiveTab('dashboard')}>
-        <ListItemButton {...(active === 'dashboard' ? {selected: true} : {})} >
+        <ListItemButton {...(active === 'dashboard' ? { selected: true } : {})}>
           <ListItemIcon>
             <DashboardIcon />
           </ListItemIcon>
@@ -32,7 +34,7 @@ export default function ListItems(){
         </ListItemButton>
       </StyledNavLink>
       <StyledNavLink to="mymoney" onClick={toggleActiveTab('mymoney')}>
-        <ListItemButton {...(active === 'mymoney' ? {selected: true} : {})} >
+        <ListItemButton {...(active === 'mymoney' ? { selected: true } : {})}>
           <ListItemIcon>
             <AttachMoneyIcon />
           </ListItemIcon>
@@ -40,7 +42,7 @@ export default function ListItems(){
         </ListItemButton>
       </StyledNavLink>
       <StyledNavLink to="myaccount" onClick={toggleActiveTab('myaccount')}>
-        <ListItemButton {...(active === 'myaccount' ? {selected: true} : {})} >
+        <ListItemButton {...(active === 'myaccount' ? { selected: true } : {})}>
           <ListItemIcon>
             <PeopleIcon />
           </ListItemIcon>
