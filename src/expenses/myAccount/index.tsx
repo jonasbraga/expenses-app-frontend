@@ -12,24 +12,14 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import { useForm } from 'react-hook-form'
 import axios, { isAxiosError } from 'axios'
 import * as yup from 'yup'
-import { decodeJwt } from 'jose'
 import PasswordReset from './PasswordReset'
+import { getUserIdFromToken } from '../../utils'
 
 type FormValues = {
   firstName: string
   lastName: string
   email: string
   cpf: string
-}
-
-type jwtClaims = {
-  userId: string
-  iat: number
-  exp: number
-  aud: string
-  iss: string
-  sub: string
-  jti: string
 }
 
 type userData = {
@@ -39,17 +29,6 @@ type userData = {
   cpf: string
   ativo: boolean
 }
-
-const getDecodedToken = () => {
-  const token = sessionStorage.getItem('token')
-  if (!token) {
-    return null
-  }
-  const claims = decodeJwt<jwtClaims>(token)
-
-  return claims
-}
-
 export default function MyAccount() {
   const [errorMsg, setError] = React.useState('')
   const [successMsg, setSuccess] = React.useState('')
@@ -60,14 +39,14 @@ export default function MyAccount() {
   }, [])
 
   const getCurrentUserData = async () => {
-    const claims = getDecodedToken()
-    if (!claims) {
+    const userId = getUserIdFromToken()
+    if (!userId) {
       return null
     }
 
     try {
       const response = await axios.get(
-        import.meta.env.VITE_SERVER_URL + '/usuarios/' + claims.iss
+        `${import.meta.env.VITE_SERVER_URL}/usuarios/${userId}`
       )
 
       if (response.status !== 200) {

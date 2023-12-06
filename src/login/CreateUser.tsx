@@ -83,7 +83,7 @@ export default function SignUp() {
       setSuccess('Cadastro realizado com sucesso! Faça login para continuar')
       setTimeout(() => {
         return navigate('/')
-      }, 2500)
+      }, 2200)
     } catch (error: unknown) {
       if (isAxiosError(error)) {
         const errors = error.response?.data?.erros
