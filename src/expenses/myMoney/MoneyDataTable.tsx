@@ -22,28 +22,7 @@ import { MenuItem, Select } from '@mui/material'
 import AddMoneyModal from './AddMoneyModal'
 import actionsButtons from './ActionsButtons'
 import { paymentIdMethodsMapper, paymentMethodsIdMapper } from '../../utils'
-
-type ResponseMovimentacoes = {
-  id: string
-  descricao: string
-  valor: number
-  data: string
-  tipo: string
-  pago: boolean
-  metodoPagamento: string
-  idMetodoPagamento: string
-  idUsuario: string
-}
-
-export type MoneyData = {
-  id: string
-  descricao: string
-  valor: number
-  data: Date
-  tipo: string
-  pago: boolean
-  metodoPagamento: string
-}
+import { MoneyData, ResponseMovimentacoes } from '../../types'
 
 export default function MoneyDataTable() {
   const [rows, setRows] = React.useState<MoneyData[]>([])
@@ -55,9 +34,9 @@ export default function MoneyDataTable() {
 
   React.useEffect(() => {
     axios
-      .get(`${import.meta.env.VITE_SERVER_URL}/movimentacoes`, {
+      .get(`${import.meta.env.VITE_SERVER_URL}/movimentacoes/filtro`, {
         headers: {
-          Authorization: `Bearer ${sessionStorage.getItem('token')}`,
+          Authorization: sessionStorage.getItem('token'),
         },
       })
       .then((response) => {

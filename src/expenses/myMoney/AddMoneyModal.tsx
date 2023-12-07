@@ -27,7 +27,7 @@ import { useForm } from 'react-hook-form'
 import * as yup from 'yup'
 import axios, { isAxiosError } from 'axios'
 import { paymentIdMethodsMapper, paymentMethodsIdMapper } from '../../utils'
-import { MoneyData } from './MoneyDataTable'
+import { MoneyData } from '../../types'
 
 type FormValues = {
   description: string

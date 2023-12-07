@@ -52,7 +52,7 @@ export default function Login() {
 
       sessionStorage.setItem('token', response.data.dados)
 
-      return navigate('/expenses')
+      return navigate('/expenses/dashboard')
     } catch (error: unknown) {
       if (isAxiosError(error)) {
         console.log(error.code)

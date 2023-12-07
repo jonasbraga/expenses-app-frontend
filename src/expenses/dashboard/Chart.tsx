@@ -9,20 +9,23 @@ import {
   Legend,
   Bar,
   DefaultTooltipContent,
+  Tooltip,
 } from 'recharts'
 
-function createData(earnings: number, expenses: number) {
-  return { earnings, expenses }
+type Props = {
+  incomeExpensesTotal: { income: number; expenses: number }
 }
 
-const data = [createData(211, 333)]
-
-export default function Chart() {
+export default function Chart({ incomeExpensesTotal }: Props) {
+  const date = new Date()
+  const month =
+    date.toLocaleString('pt-BR', { month: 'long' }).charAt(0).toUpperCase() +
+    date.toLocaleString('pt-BR', { month: 'long' }).slice(1)
+  const year = date.getFullYear()
   return (
     <React.Fragment>
       <Typography variant="h4" align="center">
-        {' '}
-        Dezembro, 2023{' '}
+        {month}, {year}
       </Typography>
       <ResponsiveContainer>
         <BarChart
@@ -34,14 +37,15 @@ export default function Chart() {
             bottom: 0,
             left: 24,
           }}
-          data={data}
+          data={[incomeExpensesTotal]}
         >
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis dataKey="name" />
           <YAxis />
+          <Tooltip />
           <DefaultTooltipContent />
           <Legend />
-          <Bar dataKey="earnings" name="Receitas" fill="#2ac41f" />
+          <Bar dataKey="income" name="Receitas" fill="#2ac41f" />
           <Bar dataKey="expenses" name="Despesas" fill="#c41f2f" />
         </BarChart>
       </ResponsiveContainer>

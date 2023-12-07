@@ -26,7 +26,7 @@ const router = createBrowserRouter([
     ],
   },
   {
-    path: '/expenses', //pagina de gastos
+    path: '/expenses',
     element: <Panel />,
     children: [
       {

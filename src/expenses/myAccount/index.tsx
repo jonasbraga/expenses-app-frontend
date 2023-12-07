@@ -67,13 +67,20 @@ export default function MyAccount() {
   }
 
   const validationSchema = yup.object({
-    firstName: yup.string().required('Nome obrigatório'),
-    lastName: yup.string().required('Sobrenome obrigatório'),
+    firstName: yup
+      .string()
+      .trim()
+      .matches(/^[a-zA-Z]*$/, 'Somente letras são permitidas')
+      .required('Nome obrigatório'),
+    lastName: yup
+      .string()
+      .matches(/^[a-zA-Z]*$/, 'Somente letras são permitidas')
+      .required('Sobrenome obrigatório'),
     email: yup.string().email('Email inválido').required('Email obrigatório'),
     cpf: yup
       .string()
       .min(11, 'CPF inválido')
-      .max(11, 'CPF inválidocMax')
+      .max(11, 'CPF inválido')
       .required('CPF obrigatório'),
   })
 
