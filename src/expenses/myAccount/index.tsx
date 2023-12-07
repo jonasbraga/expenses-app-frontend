@@ -113,6 +113,10 @@ export default function MyAccount() {
     }
   }
 
+  if (!userData) {
+    return null
+  }
+
   return (
     <Grid container spacing={3}>
       <Grid item xs={12}>
@@ -149,7 +153,7 @@ export default function MyAccount() {
                       fullWidth
                       InputLabelProps={{ shrink: true }}
                       {...register('firstName')}
-                      value={userData?.nome.split(' ')[0]}
+                      defaultValue={userData?.nome.split(' ')[0]}
                     />
                   </Grid>
                   <Grid item xs={12} sm={6}>
@@ -164,7 +168,7 @@ export default function MyAccount() {
                       fullWidth
                       InputLabelProps={{ shrink: true }}
                       {...register('lastName')}
-                      value={userData?.nome.split(' ')[1]}
+                      defaultValue={userData?.nome.split(' ')[1]}
                     />
                   </Grid>
                   <Grid item xs={12}>
@@ -195,7 +199,7 @@ export default function MyAccount() {
                       fullWidth
                       InputLabelProps={{ shrink: true }}
                       {...register('cpf')}
-                      value={userData?.cpf}
+                      defaultValue={userData?.cpf}
                     />
                   </Grid>
                 </Grid>
