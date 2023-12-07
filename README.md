@@ -1,30 +1,29 @@
-# React + TypeScript + Vite
+# Expenses App
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Context
 
-Currently, two official plugins are available:
+This project is developed in order to organize the financial life of a regular person. It aims to address a significant issue that usually everyone faces, which is spending more than you earn.
+By recording all your debts, bills and also incomes, we are able to provide a simple, direct to the point, and insightful graphs, as well as keeping a history of all transactions made.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+![Dashboard](README/dashboard.png)
 
-## Expanding the ESLint configuration
+## Tech Used
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+This project uses a variety of technologies to achieve its goals:
 
-- Configure the top-level `parserOptions` property like this:
+- **React**: A JavaScript library for building user interfaces.
+- **TypeScript**: A typed superset of JavaScript that adds static types.
+- **Vite**: A build tool that aims to provide a faster and leaner development experience for modern web projects.
+- **Material UI**: A popular React UI framework that implements Google's Material Design. It provides a set of reusable, well-tested, and accessible UI components. It's designed to make it easy to build dynamic and beautiful user interfaces in React applications.
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
-```
+## How to run
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+| The server must be already running
+
+After downloading the project, install its dependencies by executing:
+
+`npm install`
+
+Then just run the dev command in order to make the client server available:
+
+`npm run dev`
