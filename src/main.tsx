@@ -1,7 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './App.tsx'
-import { createBrowserRouter, RouterProvider } from 'react-router-dom'
+import { createBrowserRouter, Navigate, RouterProvider } from 'react-router-dom'
 import Login from './login/Login.tsx'
 import CreateUser from './login/CreateUser.tsx'
 import Panel from './expenses/Panel.tsx'
@@ -9,6 +9,14 @@ import Dashboard from './expenses/dashboard/Dashboard.tsx'
 import MyMoney from './expenses/myMoney/index.tsx'
 import MyAccount from './expenses/myAccount/index.tsx'
 import { setupAxiosInterceptors } from './axiosSetup.ts'
+
+function RequireAuth({ children }: { children: JSX.Element }) {
+  if (sessionStorage.getItem('token') === null) {
+    return <Navigate to="/" replace />
+  }
+
+  return children
+}
 
 const router = createBrowserRouter([
   {
@@ -27,7 +35,11 @@ const router = createBrowserRouter([
   },
   {
     path: '/expenses',
-    element: <Panel />,
+    element: (
+      <RequireAuth>
+        <Panel />
+      </RequireAuth>
+    ),
     children: [
       {
         path: '/expenses/dashboard',
