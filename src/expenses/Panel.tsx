@@ -70,8 +70,14 @@ const defaultTheme = createTheme()
 
 export default function Panel() {
   const [open, setOpen] = React.useState(true)
+  const [tabTitle, setTabTitle] = React.useState('Dashboard')
+
   const toggleDrawer = () => {
     setOpen(!open)
+  }
+
+  const handleButtonClick = (newTitle: string) => {
+    setTabTitle(newTitle)
   }
 
   return (
@@ -103,7 +109,7 @@ export default function Panel() {
               noWrap
               sx={{ flexGrow: 1 }}
             >
-              Dashboard
+              {tabTitle}
             </Typography>
           </Toolbar>
         </AppBar>
@@ -122,7 +128,7 @@ export default function Panel() {
           </Toolbar>
           <Divider />
           <List component="nav">
-            <ListItems />
+            <ListItems onTabChange={handleButtonClick} />
           </List>
         </Drawer>
         <Box

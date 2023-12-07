@@ -18,31 +18,51 @@ export const StyledNavLink: React.FC<NavLinkProps> = ({
   )
 }
 
-export default function ListItems() {
-  const [active, setActive] = React.useState('dashboard')
-  const toggleActiveTab = (tab: string) => () => {
-    setActive(tab)
+type ListItemsProps = {
+  onTabChange: (newTitle: string) => void
+}
+
+export default function ListItems({ onTabChange }: ListItemsProps) {
+  const [activeTab, setActiveTab] = React.useState('dashboard')
+  const onClickListItem = (tabId: string, tabTitle: string) => () => {
+    onTabChange(tabTitle)
+    setActiveTab(tabId)
   }
   return (
     <React.Fragment>
-      <StyledNavLink to="dashboard" onClick={toggleActiveTab('dashboard')}>
-        <ListItemButton {...(active === 'dashboard' ? { selected: true } : {})}>
+      <StyledNavLink
+        to="dashboard"
+        onClick={onClickListItem('dashboard', 'Dashboard')}
+      >
+        <ListItemButton
+          {...(activeTab === 'dashboard' ? { selected: true } : {})}
+        >
           <ListItemIcon>
             <DashboardIcon />
           </ListItemIcon>
           <ListItemText primary="Dashboard" />
         </ListItemButton>
       </StyledNavLink>
-      <StyledNavLink to="mymoney" onClick={toggleActiveTab('mymoney')}>
-        <ListItemButton {...(active === 'mymoney' ? { selected: true } : {})}>
+      <StyledNavLink
+        to="mymoney"
+        onClick={onClickListItem('mymoney', 'Meu dinheiro')}
+      >
+        <ListItemButton
+          {...(activeTab === 'mymoney' ? { selected: true } : {})}
+        >
           <ListItemIcon>
             <AttachMoneyIcon />
           </ListItemIcon>
           <ListItemText primary="Meu dinheiro" />
         </ListItemButton>
       </StyledNavLink>
-      <StyledNavLink to="myaccount" onClick={toggleActiveTab('myaccount')}>
-        <ListItemButton {...(active === 'myaccount' ? { selected: true } : {})}>
+      <StyledNavLink
+        to="myaccount"
+        onClick={onClickListItem('myaccount', 'Meu perfil')}
+      >
+        <ListItemButton
+          {...(activeTab === 'myaccount' ? { selected: true } : {})}
+        >
           <ListItemIcon>
             <PeopleIcon />
           </ListItemIcon>
